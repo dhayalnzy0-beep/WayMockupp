@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<meta name="theme-color" content="#0E2A3B">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="وَعْي">
+<title>وَعْي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:#0E2A3B}
+body{font-family:'IBM Plex Sans Arabic',"Segoe UI",Tahoma,system-ui,sans-serif;color:#10212B;overscroll-behavior:none}
+button,textarea,input{font-family:inherit}
+button{cursor:pointer}
+button:disabled{opacity:.45;cursor:default}
+#app{height:100vh;height:100dvh;max-width:560px;margin:0 auto;display:flex;flex-direction:column;background:#F3F6F5;overflow:hidden}
+.top{flex:none;background:#0E2A3B;color:#fff;padding:calc(env(safe-area-inset-top) + 14px) 18px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.top small{display:block;font-size:12px;color:#7FE0C4;font-weight:600}
+.top h1{margin:0;font-size:20px}
+.pchip{display:flex;align-items:center;gap:8px;background:#163A4F;border-radius:99px;padding:5px 12px 5px 5px;font-size:12px;color:#D6E2E8;white-space:nowrap}
+.pchip b{width:30px;height:30px;border-radius:50%;background:#2BB39A;color:#06231F;display:flex;align-items:center;justify-content:center}
+main{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px 16px 28px;display:flex;flex-direction:column;gap:14px}
+.card{background:#fff;border:1px solid #DCE5E2;border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.dark{background:#0E2A3B;color:#fff;border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:8px}
+.dark .mut{color:#C9D8DF}.dark .lbl{color:#B9CCD6;font-size:12px}
+.acc{color:#7FE0C4;font-size:12px;font-weight:600}
+.h{font-size:16px;font-weight:700;margin:0}
+.mut{color:#4B5B63}
+.sm{font-size:13px;line-height:1.8}
+.xs{font-size:12px;line-height:1.7}
+.btn{min-height:50px;border-radius:12px;border:0;background:#0F766E;color:#fff;font-size:15px;font-weight:600;width:100%}
+.btn2{min-height:46px;border-radius:12px;border:1px solid #C8D3CF;background:#fff;color:#33454E;font-size:14px;width:100%}
+.btn3{min-height:44px;border-radius:12px;border:1px dashed #0F766E;background:#fff;color:#0F766E;font-size:14px;width:100%}
+.row{display:flex;gap:10px}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.opt{text-align:right;padding:12px 14px;min-height:52px;border-radius:12px;font-size:15px;display:flex;align-items:center;gap:12px;border:1px solid #D5DEDB;background:#fff;color:#10212B;width:100%}
+.opt i{width:18px;height:18px;flex:none;border-radius:50%;border:2px solid #A9B8B3}
+.opt.on{border:2px solid #0F766E;background:#E6F4F2}.opt.on i{border:6px solid #0F766E}
+.chip{min-height:40px;padding:0 12px;border-radius:99px;font-size:13px;border:1px solid #C8D3CF;background:#fff;color:#33454E}
+.chip.on{background:#0F766E;border-color:#0F766E;color:#fff}
+.bar{height:8px;background:#E6ECEA;border-radius:99px;overflow:hidden}.bar>div{height:100%;border-radius:99px}
+.tile{background:#163A4F;border-radius:10px;padding:9px 10px}.tile div:first-child{font-size:11px;color:#B9CCD6}.tile div:last-child{font-size:15px;font-weight:700;margin-top:2px}
+.kpi{background:#fff;border:1px solid #DCE5E2;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:3px}
+.warn{border:1px solid #F1D9B5;background:#FFF8EE;border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:4px}
+.fact{display:flex;justify-content:space-between;gap:10px;font-size:13px;border-bottom:1px solid #EEF2F0;padding-bottom:9px}
+.fact b{text-align:left}
+textarea{border:1px solid #C8D3CF;border-radius:12px;padding:10px 12px;font-size:15px;line-height:1.7;resize:none;color:#10212B;width:100%}
+.drop{border:2px dashed #9CC9C1;border-radius:18px;background:#fff;padding:28px 16px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;cursor:pointer}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.tag{font-size:11px;font-weight:700;padding:1px 8px;border-radius:99px;flex:none;margin-top:3px}
+nav{flex:none;background:#fff;border-top:1px solid #DCE5E2;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));padding:8px 6px calc(env(safe-area-inset-bottom) + 10px)}
+nav button{border:0;background:transparent;display:flex;flex-direction:column;align-items:center;gap:4px;min-height:54px;color:#5B6B73;font-size:11px;font-weight:600}
+nav button span{width:48px;height:30px;border-radius:99px;display:flex;align-items:center;justify-content:center}
+nav button.on{color:#0F766E}nav button.on span{background:#DDF2EC}
+.fade{animation:f .25s ease}@keyframes f{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const PQ = [
+  { topic: 'الأهداف', q: 'ما هدفك الأساسي من الاستثمار؟', hint: 'هدفك يحدد نوع الأدوات المناسبة لك أكثر من أي شيء آخر.', o: ['أحافظ على مدخراتي من التآكل', 'أحصل على دخل دوري ثابت', 'نمو متوازن على المدى المتوسط', 'نمو سريع حتى لو زادت المخاطرة'] },
+  { topic: 'الأفق الزمني', q: 'متى تتوقع أنك ستحتاج هذا المال؟', hint: 'كلما طالت المدة، زادت قدرتك على تحمّل تقلبات السوق.', o: ['خلال أقل من سنة', 'خلال سنة إلى 3 سنوات', 'خلال 3 إلى 5 سنوات', 'بعد أكثر من 5 سنوات'] },
+  { topic: 'تحمّل المخاطرة', q: 'لو خسرت محفظتك 20% خلال شهر واحد، ماذا ستفعل؟', hint: 'لا توجد إجابة صحيحة، نريد أن نعرف ردة فعلك الحقيقية.', o: ['أبيع كل شيء حتى لا أخسر أكثر', 'أبيع جزءاً وأنتظر', 'أنتظر وأراجع الأسباب', 'أشتري المزيد بسعر أقل'] },
+  { topic: 'الخبرة', q: 'كيف تصف خبرتك في الاستثمار؟', hint: 'نستخدمها لنختار مستوى الشرح المناسب لك.', o: ['ليست لدي خبرة', 'قرأت وتابعت قليلاً', 'استثمرت من قبل', 'أتابع السوق وأحلل بانتظام'] },
+  { topic: 'مصادر المعلومات', q: 'من أين تأخذ معلوماتك قبل أي قرار مالي؟', hint: 'جودة المصدر تؤثر في جودة القرار مباشرة.', o: ['الأصدقاء ووسائل التواصل', 'الأخبار والعناوين', 'مزيج من الأخبار والأرقام', 'التقارير المالية وإفصاحات الشركات'] },
+  { topic: 'القدرة المالية', q: 'كم تستطيع أن تستثمر من دخلك الشهري دون أن يتأثر مصروفك؟', hint: 'الاستثمار بمال تحتاجه قريباً يرفع الضغط ويدفع لقرارات متسرعة.', o: ['أقل من 5%', 'من 5% إلى 10%', 'من 10% إلى 20%', 'أكثر من 20%'] }
+];
+
+const SC = [
+  { title: 'تراجع أرباح شركة', tag: 'أرباح الشركات', body: 'أعلنت شركة تملك أسهمها تراجع أرباحها الفصلية 30%، وهبط سهمها 12% في يوم واحد. قطاع الشركة مستقر، والتراجع حسب الإفصاح سببه تكاليف توسع جديد.',
+    data: [['تغيّر الأرباح', '-30%'], ['تغيّر السهم اليوم', '-12%'], ['سبب التراجع', 'تكاليف توسع'], ['ديون الشركة', 'منخفضة']],
+    o: [
+      { t: 'أبيع كل أسهمي فوراً', b: 'fear', q: 30, ex: 'البيع الفوري بعد هبوط حاد غالباً رد فعل على الخوف. التراجع هنا مرتبط بتكاليف توسع قد تتحول إلى نمو لاحقاً.' },
+      { t: 'أنتظر وأقرأ تفاصيل الإفصاح قبل أي قرار', b: 'analytic', q: 90, ex: 'قرار متزن. فهم سبب التراجع أهم من حركة السعر في يوم واحد.' },
+      { t: 'أشتري المزيد لأن السعر صار رخيصاً', b: 'haste', q: 50, ex: 'انخفاض السعر وحده لا يعني أن السهم رخيص. يحتاج القرار مقارنة السعر بقيمة الشركة وأرباحها المتوقعة.' },
+      { t: 'أسأل في مجموعة الأسهم وأفعل مثل الأغلبية', b: 'herd', q: 25, ex: 'رأي المجموعة يجعل قرارك تابعاً لمعلومات لا تعرف دقتها ولا مصدرها.' }
+    ] },
+  { title: 'رفع أسعار الفائدة', tag: 'الاقتصاد', body: 'رفع البنك المركزي الفائدة 0.5%. لديك أسهم في شركة عقارية تعتمد على القروض بشكل كبير في تمويل مشاريعها.',
+    data: [['تغيّر الفائدة', '+0.5%'], ['ديون الشركة', 'مرتفعة'], ['القطاع', 'العقار'], ['السهم آخر شهر', '-4%']],
+    o: [
+      { t: 'لا أغيّر شيئاً، الفائدة لا تؤثر على الأسهم', b: 'over', q: 20, ex: 'ارتفاع الفائدة يرفع تكلفة الاقتراض، والشركات ذات الديون العالية تتأثر أرباحها أكثر من غيرها.' },
+      { t: 'أراجع حجم ديون الشركة وأثر الفائدة على أرباحها', b: 'analytic', q: 92, ex: 'هذا هو الربط الصحيح بين قرار اقتصادي وأداء شركة بعينها.' },
+      { t: 'أبيع لأن الأخبار كلها سلبية', b: 'fear', q: 35, ex: 'العناوين السلبية ليست تحليلاً. السؤال الأهم: كم سيتأثر ربح الشركة فعلاً؟' },
+      { t: 'أخفف وزن السهم تدريجياً وأنوّع في قطاعات أقل تأثراً', b: 'analytic', q: 80, ex: 'تنويع معقول يقلل أثر قطاع واحد على محفظتك دون قرار متسرع.' }
+    ] },
+  { title: 'سهم يصعد بقوة', tag: 'سلوك السوق', body: 'سهم شركة صغيرة ارتفع 40% خلال أسبوع، والكل في وسائل التواصل يتحدث عنه. لا توجد أي أخبار أو إفصاحات رسمية من الشركة.',
+    data: [['الارتفاع خلال أسبوع', '+40%'], ['إفصاحات رسمية', 'لا يوجد'], ['حجم الشركة', 'صغيرة'], ['حجم التداول', '6 أضعاف المعتاد']],
+    o: [
+      { t: 'أشتري الآن قبل أن يفوتني الصعود', b: 'greed', q: 15, ex: 'الخوف من تفويت الفرصة يدفع للشراء قرب القمة، خصوصاً مع غياب أي سبب رسمي للارتفاع.' },
+      { t: 'أبحث عن سبب الارتفاع في الإفصاحات الرسمية أولاً', b: 'analytic', q: 90, ex: 'صحيح. ارتفاع بلا سبب معلن وحجم تداول غير طبيعي إشارتان تستحقان الحذر.' },
+      { t: 'أشتري بمبلغ صغير لأن الجميع يشتري', b: 'herd', q: 30, ex: 'تصغير المبلغ لا يغيّر أن القرار مبني على تقليد الآخرين لا على معلومة.' },
+      { t: 'أتجاهله لأنه لا يدخل ضمن خطتي', b: 'analytic', q: 78, ex: 'الالتزام بالخطة يحميك من القرارات العاطفية، وهذه مهارة مهمة.' }
+    ] },
+  { title: 'ربح كبير في المحفظة', tag: 'إدارة المحفظة', body: 'حققت محفظتك ربحاً 25% خلال سنة، أعلى بكثير من هدفك السنوي. لكن سهماً واحداً أصبح يشكّل 60% من المحفظة.',
+    data: [['ربح المحفظة', '+25%'], ['هدفك السنوي', '10%'], ['وزن أكبر سهم', '60%'], ['المدة المتبقية لهدفك', '3 سنوات']],
+    o: [
+      { t: 'أضاعف استثماري لأن السوق في صالحي', b: 'greed', q: 25, ex: 'الأرباح السابقة لا تضمن القادمة، ومضاعفة المبلغ ترفع المخاطرة في وقت تركّزت فيه المحفظة أصلاً.' },
+      { t: 'أعيد توازن المحفظة وأخفض وزن السهم الكبير', b: 'analytic', q: 92, ex: 'إعادة التوازن تثبّت جزءاً من الربح وتقلل الاعتماد على سهم واحد.' },
+      { t: 'أبيع كل شيء قبل أن يضيع الربح', b: 'fear', q: 40, ex: 'الخوف من خسارة الربح قد يخرجك من السوق كلياً بينما هدفك بعد 3 سنوات.' },
+      { t: 'أتركها كما هي بلا مراجعة', b: 'over', q: 38, ex: 'ترك سهم واحد بوزن 60% يرفع مخاطرة المحفظة دون أن تنتبه لذلك.' }
+    ] }
+];
+
+const TAGS = [
+  { id: 'data', t: 'قرأت أرقام الشركة والإفصاحات', k: 'analytic' },
+  { id: 'plan', t: 'يتوافق مع خطتي وأهدافي', k: 'analytic' },
+  { id: 'crowd', t: 'رأيت الآخرين يفعلون ذلك', k: 'herd' },
+  { id: 'afraid', t: 'خفت أن أخسر أكثر', k: 'fear' },
+  { id: 'quick', t: 'توقعت ربحاً سريعاً', k: 'greed' },
+  { id: 'gut', t: 'إحساسي يقول ذلك', k: 'over' },
+  { id: 'rush', t: 'قررت بسرعة دون بحث', k: 'haste' }
+];
+
+const KW = {
+  fear: ['خفت', 'خوف', 'أخسر', 'خسارة', 'قلق'],
+  herd: ['الناس', 'الكل', 'الجميع', 'المجموعة', 'تويتر', 'أصدقائي', 'سناب'],
+  greed: ['يفوتني', 'فرصة', 'ربح سريع', 'أضاعف'],
+  over: ['متأكد', 'أكيد', 'إحساس', 'مستحيل'],
+  haste: ['بسرعة', 'فوراً', 'مباشرة'],
+  analytic: ['أرباح', 'إفصاح', 'تقرير', 'ديون', 'قيمة', 'خطة', 'هدف', 'نسبة', 'بيانات', 'قوائم', 'سبب', 'تنويع']
+};
+
+const BIAS = {
+  fear: { n: 'الخوف من الخسارة', d: 'تميل للخروج من السوق عند أول هبوط حتى لو كان مؤقتاً.' },
+  herd: { n: 'تقليد الآخرين', d: 'تتأثر بما يفعله الناس أكثر من المعلومات نفسها.' },
+  haste: { n: 'التسرّع', d: 'تتخذ القرار قبل أن تجمع معلومات كافية.' },
+  greed: { n: 'الطمع وخوف تفويت الفرصة', d: 'تلاحق الارتفاعات السريعة وتنسى المخاطرة.' },
+  over: { n: 'الثقة الزائدة', d: 'تفترض أن المخاطر لا تخصك أو تعتمد على إحساسك.' }
+};
+const BKEYS = ['fear', 'herd', 'haste', 'greed', 'over'];
+
+
+function analyze(si, oi, tags, text) {
+  const opt = SC[si].o[oi];
+  const b = { fear: 0, herd: 0, haste: 0, greed: 0, over: 0 };
+  let good = 0, bad = 0;
+  if (opt.b === 'analytic') good += 1; else b[opt.b] += 2;
+  tags.forEach((id) => { const tg = TAGS.find((x) => x.id === id); if (!tg) return; if (tg.k === 'analytic') good += 1; else { b[tg.k] += 1; bad += 1; } });
+  const tx = text || '';
+  Object.keys(KW).forEach((k) => { KW[k].forEach((w) => { if (tx.indexOf(w) >= 0) { if (k === 'analytic') good += 1; else { b[k] += 1; bad += 1; } } }); });
+  let q = opt.q + Math.min(good, 3) * 4 - bad * 6;
+  q = Math.max(5, Math.min(100, q));
+  return { choice: oi, tags: tags.slice(), text: tx, biases: b, quality: q };
+}
+
+function qColor(q) { return q >= 80 ? '#0F766E' : q >= 60 ? '#2F7D4F' : q >= 40 ? '#B45309' : '#B42318'; }
+function qLabel(q) { return q >= 80 ? 'قرار متزن' : q >= 60 ? 'قرار جيد' : q >= 40 ? 'يحتاج مراجعة' : 'قرار عاطفي'; }
+
+
+const S = { screen: 'profile', pIdx: 0, pAns: {}, pFinished: false, labIdx: 0, labStage: 'choose', labAns: [], tmpChoice: null, tmpTags: [], tmpText: '', labFinished: false, fileName: '', finKind: 0, finStage: 'idle', busyStep: 0 };
+const TITLES = { profile: 'الملف الاستثماري', lab: 'مختبر المحاكاة', analyst: 'المحلل السلوكي', finance: 'المترجم المالي' };
+const esc = (x) => String(x == null ? '' : x).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+let lastScreen = null;
+let timers = [];
+
+function set(p) { Object.assign(S, p); render(); }
+
+function profileInfo() {
+  const a = S.pAns; let sum = 0;
+  for (let i = 0; i < 6; i++) sum += (a[i] ?? 0) + 1;
+  const risk = sum <= 11 ? 'محافظ' : sum <= 17 ? 'متوازن' : 'نمو';
+  const exp = ['مبتدئ', 'مبتدئ', 'متوسط', 'متقدم'][a[3] ?? 0];
+  return { sum, risk, exp };
+}
+const pickTxt = (i) => PQ[i].o[S.pAns[i] ?? 0];
+const RISK_DESC = { 'محافظ': 'تفضّل الأمان على العائد المرتفع، وتنزعج من التقلبات الكبيرة. البداية المناسبة لك أدوات مستقرة ودخل ثابت.', 'متوازن': 'تقبل بعض التقلب مقابل نمو معقول، وتحتاج توازناً بين الأمان وفرص النمو.', 'نمو': 'وقتك طويل وتتحمل تقلبات أكبر مقابل فرص نمو أعلى، بشرط أن تبقى قراراتك مبنية على تحليل.' };
+
+/* ---------- PROFILE ---------- */
+function viewProfile() {
+  if (S.pFinished) {
+    const info = profileInfo(); const ri = { 'محافظ': 0, 'متوازن': 1, 'نمو': 2 }[info.risk];
+    const scale = ['محافظ', 'متوازن', 'نمو'].map((t, i) => `<div style="flex:1;display:flex;flex-direction:column;gap:5px"><div style="height:7px;border-radius:99px;background:${i <= ri ? '#2BB39A' : '#2C4C5E'}"></div><span style="font-size:11px;color:#C9D8DF">${t}</span></div>`).join('');
+    const facts = [['الهدف', pickTxt(0)], ['الأفق الزمني', pickTxt(1)], ['الخبرة', info.exp], ['مصدر المعلومات', pickTxt(4)], ['القدرة على الاستثمار', pickTxt(5)]];
+    return `
+    <section class="dark"><span class="lbl">نمط تحمّل المخاطرة</span><span style="font-size:28px;font-weight:700">${info.risk}</span>
+      <span class="sm mut">${RISK_DESC[info.risk]}</span><div style="margin-top:6px;display:flex;gap:4px">${scale}</div></section>
+    <section class="card"><span class="h" style="font-size:15px">ملخص ملفك</span>${facts.map((f) => `<div class="fact"><span class="mut">${f[0]}</span><b>${esc(f[1])}</b></div>`).join('')}</section>
+    <button class="btn" data-act="tab" data-v="lab">ابدأ مختبر المحاكاة</button>
+    <button class="btn2" data-act="resetProfile">إعادة الأسئلة</button>`;
+  }
+  const q = PQ[S.pIdx]; const cur = S.pAns[S.pIdx];
+  const prog = Math.round((S.pIdx + (cur != null ? 1 : 0)) / 6 * 100);
+  const welcome = S.pIdx === 0 ? `
+    <section class="dark"><span style="font-size:19px;font-weight:700;line-height:1.5">تعلّم كيف تفكّر كمستثمر قبل أن تستثمر</span>
+      <span class="sm mut">ستة أسئلة قصيرة نتعرّف فيها عليك، ثم تجرّب قراراتك في المختبر بمحفظة افتراضية.</span>
+      <button data-act="demo" style="align-self:flex-start;margin-top:4px;min-height:40px;padding:0 14px;border-radius:10px;border:1px solid #4B6B7C;background:transparent;color:#fff;font-size:13px">عرض تجريبي سريع</button></section>` : '';
+  return `${welcome}
+  <section class="card" style="gap:16px">
+    <div style="display:flex;justify-content:space-between;font-size:13px"><span class="mut">السؤال ${S.pIdx + 1} من 6</span><span style="color:#0F766E;font-weight:600">${q.topic}</span></div>
+    <div class="bar" style="height:6px"><div style="width:${prog}%;background:#0F766E"></div></div>
+    <div><h2 style="margin:0 0 6px;font-size:19px;line-height:1.55">${q.q}</h2><p class="mut" style="margin:0;font-size:13px;line-height:1.7">${q.hint}</p></div>
+    <div style="display:flex;flex-direction:column;gap:8px">${q.o.map((t, i) => `<button class="opt ${cur === i ? 'on' : ''}" data-act="pOpt" data-v="${i}"><i></i><span>${t}</span></button>`).join('')}</div>
+    <div class="row"><button class="btn2" style="width:auto;padding:0 18px" data-act="pPrev" ${S.pIdx === 0 ? 'disabled' : ''}>السابق</button>
+      <button class="btn" style="flex:1" data-act="pNext" ${cur == null ? 'disabled' : ''}>${S.pIdx === 5 ? 'اعرض ملفي' : 'التالي'}</button></div>
+  </section>`;
+}
+
+/* ---------- LAB ---------- */
+function viewLab() {
+  const steps = `<div style="display:flex;gap:6px">${SC.map((x, i) => { const done = !!S.labAns[i] && (i < S.labIdx || S.labFinished || S.labStage === 'feedback'); const curr = i === S.labIdx && !S.labFinished; return `<div style="flex:1;height:6px;border-radius:99px;background:${done ? '#2BB39A' : curr ? '#0E2A3B' : '#DCE5E2'}"></div>`; }).join('')}</div>`;
+  if (S.labFinished) {
+    return `${steps}<span class="h" style="font-size:18px">أنهيت السيناريوهات الأربعة</span>
+    ${S.labAns.map((a, i) => `<div class="card" style="flex-direction:row;align-items:center;justify-content:space-between;padding:12px 14px;border-radius:14px"><div style="display:flex;flex-direction:column;gap:2px;min-width:0"><b style="font-size:14px">${SC[i].title}</b><span class="xs mut">${SC[i].o[a.choice].t}</span></div><b style="font-size:16px;color:${qColor(a.quality)};white-space:nowrap">${a.quality} / 100</b></div>`).join('')}
+    <button class="btn" data-act="tab" data-v="analyst">اعرض تحليلي السلوكي</button>
+    <button class="btn2" data-act="resetLab">إعادة المحاكاة</button>`;
+  }
+  const sc = SC[S.labIdx];
+  let body = `${steps}
+  <section class="dark" style="padding:16px;gap:10px"><span class="acc">سيناريو ${S.labIdx + 1} من 4 · ${sc.tag}</span><h2 style="margin:0;font-size:18px;line-height:1.5">${sc.title}</h2>
+    <p class="sm" style="margin:0;color:#D6E2E8">${sc.body}</p>
+    <div class="g2" style="gap:8px">${sc.data.map((d) => `<div class="tile"><div>${d[0]}</div><div>${d[1]}</div></div>`).join('')}</div>
+    <span class="lbl">محفظة افتراضية: 10,000 ريال</span></section>`;
+  if (S.labStage === 'choose') {
+    body += `<span class="h">ماذا ستفعل؟</span>
+    ${sc.o.map((o, i) => `<button class="opt ${S.tmpChoice === i ? 'on' : ''}" style="font-size:14px" data-act="scOpt" data-v="${i}"><i></i><span>${o.t}</span></button>`).join('')}
+    <button class="btn" data-act="toReason" ${S.tmpChoice == null ? 'disabled' : ''}>التالي: لماذا اخترت هذا؟</button>`;
+  } else if (S.labStage === 'reason') {
+    const can = S.tmpTags.length || S.tmpText.trim();
+    body += `<section class="card">
+      <span class="xs mut">قرارك</span><div style="font-size:15px;font-weight:600;background:#F1F6F4;border-radius:10px;padding:10px 12px;margin-top:-6px">${sc.o[S.tmpChoice].t}</div>
+      <span class="h">ما الذي دفعك لهذا القرار؟</span><span class="xs mut" style="margin-top:-6px">اختر كل ما ينطبق، وكن صريحاً.</span>
+      <div style="display:flex;flex-wrap:wrap;gap:6px">${TAGS.map((t) => `<button class="chip ${S.tmpTags.indexOf(t.id) >= 0 ? 'on' : ''}" data-act="tag" data-v="${t.id}">${t.t}</button>`).join('')}</div>
+      <label for="reason" style="font-size:14px;font-weight:600">اشرح سببك بكلماتك</label>
+      <textarea id="reason" rows="3" placeholder="مثال: سبب التراجع تكاليف توسع، والشركة ديونها قليلة">${esc(S.tmpText)}</textarea>
+      <div class="row"><button class="btn2" style="width:auto;padding:0 16px" data-act="back">رجوع</button><button id="submitBtn" class="btn" style="flex:1" data-act="submit" ${can ? '' : 'disabled'}>حلّل قراري</button></div>
+    </section>`;
+  } else {
+    const fb = S.labAns[S.labIdx]; const c = qColor(fb.quality);
+    const bs = BKEYS.filter((k) => fb.biases[k] > 0);
+    const best = sc.o.reduce((a, o) => (o.q > a.q ? o : a), sc.o[0]);
+    body += `<section class="card fade">
+      <div style="display:flex;align-items:center;gap:14px"><div style="width:76px;height:76px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;border:7px solid ${c}"><b style="font-size:20px">${fb.quality}</b></div>
+        <div style="display:flex;flex-direction:column;gap:2px"><span class="xs mut">جودة القرار</span><b style="font-size:19px;color:${c}">${qLabel(fb.quality)}</b><span class="xs mut">نقيّم طريقة التفكير، لا الربح والخسارة</span></div></div>
+      <div class="sm" style="background:#F1F6F4;border-radius:12px;padding:12px;font-size:14px">${sc.o[fb.choice].ex}</div>
+      <b style="font-size:14px">مؤشرات لاحظناها</b>
+      ${bs.length ? bs.map((k) => `<div class="warn"><b style="font-size:13px;color:#8A4B08">${BIAS[k].n}</b><span class="sm" style="color:#33454E">${BIAS[k].d}</span></div>`).join('') : '<span style="font-size:13px;color:#0F766E;font-weight:600">لا توجد مؤشرات تحيّز واضحة. قرار مبني على المعلومات.</span>'}
+      <div class="sm" style="border:1px dashed #9CC9C1;border-radius:12px;padding:10px 12px"><b style="color:#0F766E">النهج الأقوى: </b>${best.t}. ${best.ex}</div>
+      <button class="btn" data-act="nextSc">${S.labIdx === 3 ? 'عرض ملخص المحاكاة' : 'السيناريو التالي'}</button>
+    </section>`;
+  }
+  return body;
+}
+
+/* ---------- ANALYST ---------- */
+const ALLOC = {
+  'محافظ': { name: 'توزيع محافظ', a: [['صكوك وأدوات دخل ثابت', 50, 'عائد ثابت نسبياً وتقلب منخفض، مناسب لحماية رأس المال.'], ['صناديق أسواق النقد', 25, 'سيولة عالية ومخاطرة منخفضة جداً.'], ['أسهم شركات توزيعات مستقرة', 20, 'شركات كبيرة بتوزيعات منتظمة وتاريخ طويل.'], ['صناديق مؤشرات', 5, 'تعرّف تدريجي على السوق بتنويع واسع.']] },
+  'متوازن': { name: 'توزيع متوازن', a: [['صناديق مؤشرات السوق', 35, 'تنويع واسع بتكلفة منخفضة دون اختيار أسهم فردية.'], ['أسهم شركات توزيعات', 25, 'دخل دوري مع فرصة نمو معقولة.'], ['صكوك وأدوات دخل ثابت', 25, 'تخفف تقلب المحفظة وقت الهبوط.'], ['صناديق الريت العقارية', 15, 'تعرّض للعقار بمبالغ صغيرة وتوزيعات دورية.']] },
+  'نمو': { name: 'توزيع نمو', a: [['صناديق مؤشرات السوق', 40, 'الأساس المتنوع للمحفظة.'], ['أسهم شركات نمو', 30, 'شركات تنمو إيراداتها بسرعة، مع تقلب أعلى.'], ['صناديق الريت العقارية', 15, 'تنويع خارج الأسهم التقليدية.'], ['صكوك', 15, 'وسادة أمان وقت تقلبات السوق.']] }
+};
+const AC = ['#0E2A3B', '#0F766E', '#2BB39A', '#E08A2E'];
+const PLAN_B = { fear: 'تدرّب على التفريق بين هبوط مؤقت وتراجع حقيقي في أداء الشركة.', herd: 'اجعل لكل قرار مصدراً رسمياً واحداً على الأقل قبل أن تتصرف.', haste: 'طبّق قاعدة الانتظار 24 ساعة قبل أي قرار في المحاكاة.', greed: 'اكتب سبب الشراء وسعر الخروج قبل الدخول في أي سهم.', over: 'راجع محفظتك كل شهر واسأل: ما الذي قد يجعلني مخطئاً؟' };
+
+function aggregate() {
+  const tot = { fear: 0, herd: 0, haste: 0, greed: 0, over: 0 }; let qs = 0;
+  S.labAns.forEach((a) => { qs += a.quality; BKEYS.forEach((k) => { tot[k] += a.biases[k]; }); });
+  const avgQ = S.labAns.length ? Math.round(qs / S.labAns.length) : 0;
+  const dom = BKEYS.reduce((a, k) => (tot[k] > tot[a] ? k : a), 'fear');
+  return { tot, avgQ, dom, hasBias: tot[dom] > 0 };
+}
+
+function viewAnalyst() {
+  if (!(S.pFinished && S.labFinished)) {
+    const st = (d) => `<span style="font-size:12px;font-weight:600;color:${d ? '#0F766E' : '#B45309'}">${d ? 'مكتمل' : 'لم يكتمل'}</span>`;
+    return `<section class="card"><span class="h" style="font-size:18px">نحتاج نعرفك أكثر أولاً</span>
+      <p class="sm" style="margin:0;color:#33454E;font-size:14px">التقرير يُبنى من مصدرين: ما قلته عن نفسك في الملف، وما فعلته فعلاً في المختبر.</p>
+      <button class="btn2" style="display:flex;justify-content:space-between;align-items:center;padding:0 14px;color:#10212B" data-act="tab" data-v="profile"><span>الملف الاستثماري</span>${st(S.pFinished)}</button>
+      <button class="btn2" style="display:flex;justify-content:space-between;align-items:center;padding:0 14px;color:#10212B" data-act="tab" data-v="lab"><span>مختبر المحاكاة</span>${st(S.labFinished)}</button>
+      <button class="btn3" data-act="demo">اعرض تقريراً ببيانات تجريبية</button></section>`;
+  }
+  const info = profileInfo(); const g = aggregate();
+  let planRisk = info.risk; let mismatch = '';
+  if (info.risk === 'نمو' && g.dom === 'fear' && g.hasBias) { planRisk = 'متوازن'; mismatch = 'قلت في ملفك إنك تتحمل مخاطرة عالية، لكن قراراتك في المحاكاة أظهرت خوفاً واضحاً من الخسارة. لذلك بنينا لك توزيعاً متوازناً حتى تختبر نفسك تدريجياً.'; }
+  if (info.risk === 'محافظ' && (g.dom === 'greed' || g.dom === 'herd') && g.hasBias) mismatch = 'ملفك محافظ، لكنك في المحاكاة لاحقت الارتفاعات أو تبعت الآخرين. هذا التناقض يستحق الانتباه، لأنه يعرّضك لمخاطر لا تريدها أصلاً.';
+  const al = ALLOC[planRisk];
+  const persona = g.avgQ >= 75 ? 'المحلل المنضبط' : g.avgQ >= 55 ? 'المتعلّم المتوازن' : g.hasBias ? ({ fear: 'الحذِر المتردد', herd: 'المتأثر بالجمهور', haste: 'المتحمّس المتسرع', greed: 'صائد الفرص', over: 'الواثق أكثر من اللازم' })[g.dom] : 'المتعلّم المتوازن';
+  const pdesc = g.avgQ >= 75 ? 'تبني قراراتك على المعلومات غالباً، وتحتاج فقط أن تحافظ على هذا الانضباط وقت الضغط.' : 'لديك أساس جيد، لكن العاطفة تتدخل في بعض قراراتك. هذا طبيعي ويتحسن بالتدريب.';
+  const strengths = [], weaknesses = [];
+  S.labAns.forEach((a, i) => { if (a.quality >= 75) strengths.push('تعاملت جيداً مع: ' + SC[i].title); else if (a.quality < 50) weaknesses.push('راجع قرارك في: ' + SC[i].title); });
+  if (info.exp !== 'مبتدئ') strengths.push('لديك خبرة سابقة تساعدك على الفهم');
+  if ((S.pAns[4] ?? 0) >= 2) strengths.push('تعتمد على الأرقام والتقارير كمصدر'); else weaknesses.push('مصادر معلوماتك تحتاج تنويعاً وتوثيقاً');
+  if (!strengths.length) strengths.push('رغبتك في التعلّم قبل المخاطرة بأموالك');
+  if (!weaknesses.length) weaknesses.push('حافظ على هذا المستوى في مواقف أصعب');
+  const plan = [
+    ['الشهر 1', info.exp === 'مبتدئ' ? 'الأساسيات' : 'قراءة القوائم المالية', info.exp === 'مبتدئ' ? 'الفرق بين الأسهم والصكوك والصناديق، ومعنى المخاطرة والعائد.' : 'قائمة الدخل والميزانية والتدفقات النقدية، وأهم 5 مؤشرات فيها.'],
+    ['الشهر 2', 'معالجة التحيّز الأبرز', g.hasBias ? PLAN_B[g.dom] : 'جرّب سيناريوهات أصعب بظروف سوق متقلبة.'],
+    ['الشهر 3', 'محفظة افتراضية كاملة', 'ابنِ محفظة افتراضية حسب ' + al.name + ' وتابعها شهراً كاملاً مع تسجيل كل قرار وسببه.']
+  ];
+  const bars = BKEYS.map((k) => { const p = Math.min(100, g.tot[k] * 14); const c = p >= 50 ? '#B45309' : p >= 25 ? '#D69E2E' : '#2BB39A'; return `<div style="display:flex;flex-direction:column;gap:5px"><div style="display:flex;justify-content:space-between;font-size:13px"><span>${BIAS[k].n}</span><b style="color:${c}">${p >= 50 ? 'مرتفع' : p >= 25 ? 'متوسط' : 'منخفض'}</b></div><div class="bar"><div style="width:${Math.max(p, 3)}%;background:${c}"></div></div></div>`; }).join('');
+  const ac = qColor(g.avgQ);
+  return `
+  <section class="dark fade"><span class="lbl">نمطك الاستثماري</span><span style="font-size:22px;font-weight:700">${persona}</span><span class="sm mut">${pdesc}</span></section>
+  <div class="g2">
+    <div class="kpi"><span class="xs mut">جودة قراراتك</span><b style="font-size:20px;color:${ac}">${g.avgQ} / 100</b><div class="bar" style="height:6px"><div style="width:${g.avgQ}%;background:${ac}"></div></div></div>
+    <div class="kpi"><span class="xs mut">تحمّل المخاطرة</span><b style="font-size:20px">${info.risk}</b><span class="xs mut">الخبرة: ${info.exp}</span></div>
+  </div>
+  <div class="warn" style="border-radius:14px;padding:12px 14px"><span class="xs" style="color:#8A4B08">التحيّز الأبرز</span><b style="font-size:16px;color:#8A4B08">${g.hasBias ? BIAS[g.dom].n : 'لا يوجد تحيّز بارز'}</b><span class="sm" style="color:#33454E">${g.hasBias ? BIAS[g.dom].d : 'قراراتك اعتمدت على المعلومات في أغلب المواقف.'}</span></div>
+  ${mismatch ? `<div class="sm" style="border:1px solid #E7B9B4;background:#FDF1F0;border-radius:14px;padding:12px 14px;color:#5C1F18"><b>ملاحظة: </b>${mismatch}</div>` : ''}
+  <section class="card" style="gap:11px"><span class="h" style="font-size:15px">خريطة التحيّزات</span>${bars}</section>
+  <div class="g2">
+    <div style="background:#EAF6F2;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:6px"><b style="font-size:13px;color:#0B5E55">نقاط قوتك</b>${strengths.slice(0, 3).map((t) => `<span class="xs">${t}</span>`).join('')}</div>
+    <div style="background:#FFF4E5;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:6px"><b style="font-size:13px;color:#8A4B08">ما يحتاج تطوير</b>${weaknesses.slice(0, 3).map((t) => `<span class="xs">${t}</span>`).join('')}</div>
+  </div>
+  <section class="card"><div><span class="h" style="font-size:15px;display:block">المجالات التي تناسبك</span><span class="xs mut">مثال توزيع تعليمي: ${al.name}</span></div>
+    <div style="display:flex;height:14px;border-radius:99px;overflow:hidden">${al.a.map((x, i) => `<div style="width:${x[1]}%;background:${AC[i]}"></div>`).join('')}</div>
+    ${al.a.map((x, i) => `<div style="display:flex;gap:10px;align-items:flex-start;border-bottom:1px solid #EEF2F0;padding-bottom:10px"><span style="width:10px;height:10px;border-radius:3px;margin-top:6px;flex:none;background:${AC[i]}"></span><div style="flex:1;display:flex;flex-direction:column;gap:2px"><div style="display:flex;justify-content:space-between;gap:8px"><b style="font-size:14px">${x[0]}</b><b style="font-size:14px">${x[1]}%</b></div><span class="xs mut">${x[2]}</span></div></div>`).join('')}
+  </section>
+  <section class="card" style="gap:10px"><span class="h" style="font-size:15px">خطتك للأشهر الثلاثة القادمة</span>
+    ${plan.map((p) => `<div style="display:flex;gap:10px;align-items:flex-start"><span style="flex:none;font-size:11px;font-weight:700;color:#fff;background:#0F766E;border-radius:8px;padding:4px 8px;margin-top:2px">${p[0]}</span><div style="display:flex;flex-direction:column;gap:2px"><b style="font-size:14px">${p[1]}</b><span class="xs" style="color:#33454E">${p[2]}</span></div></div>`).join('')}
+  </section>
+  <p class="xs mut" style="margin:0;font-size:11px">مجالات وتوزيعات للتعلم والمقارنة، وليست توصية شراء أو بيع لأي ورقة مالية.</p>
+  <button class="btn" data-act="tab" data-v="finance">حلّل شركة أو قطاعاً يهمك</button>`;
+}
+
+/* ---------- FINANCE ---------- */
+function viewFinance() {
+  if (S.finStage === 'busy') {
+    const B = ['قراءة الملف واستخراج الجداول', 'حساب المؤشرات المالية', 'تبسيط المصطلحات', 'مقارنة النتائج بملفك الاستثماري'];
+    return `<section class="card"><span class="h" style="font-size:17px">نقرأ الملف الآن...</span>${B.map((t, i) => { const c = i < S.busyStep ? '#0F766E' : i === S.busyStep ? '#10212B' : '#9AA8AE'; return `<div style="display:flex;align-items:center;gap:10px;font-size:14px;color:${c}"><span style="width:9px;height:9px;border-radius:50%;background:${c}"></span>${t}</div>`; }).join('')}</section>`;
+  }
+  if (S.finStage === 'done') {
+    const info = profileInfo(); const g = aggregate();
+    const fitMap = { 'محافظ': [55, 'مناسبة جزئياً', 'الشركة تنمو، لكن ديونها متوسطة وأرباحها تذبذبت هذا العام. بالنسبة لملف محافظ، يفضّل أن تكون نسبة صغيرة من المحفظة أو تُتابع حتى تستقر أرباح الفروع الجديدة.'], 'متوازن': [74, 'مناسبة', 'نمو الإيرادات وتوزيعات الأرباح يناسبان ملفاً متوازناً. انتبه لمتابعة الربح في الفصول القادمة لتتأكد أن التوسع بدأ يؤتي ثماره.'], 'نمو': [70, 'مناسبة', 'نمو الإيرادات 12.8% جيد، لكن الشركة في قطاع ناضج ونموها ليس سريعاً جداً. قد تكون جزءاً مستقراً من محفظة نمو لا محورها.'] };
+    const fit = S.pFinished ? fitMap[info.risk].slice() : [0, 'أكمل ملفك أولاً', 'لم تكمل ملفك الاستثماري بعد، لذلك لا نستطيع قياس مناسبة الشركة لك. أكمل الأسئلة الستة وارجع لهذه الصفحة.'];
+    if (S.pFinished && S.labFinished && g.hasBias && g.dom === 'fear') fit[2] += ' ولأن الخوف من الخسارة ظهر في قراراتك، توقّع أن تقلب سعر السهم قد يضغط عليك؛ ادخل بمبلغ تستطيع تحمّل تذبذبه.';
+    const fc = S.pFinished ? qColor(fit[0] + 10) : '#9AA8AE';
+    const yrs = [['2023', 1240, 118], ['2024', 1385, 141], ['2025', 1562, 132]];
+    const kpis = [['نمو الإيرادات', '12.8%', 'أعلى من متوسط القطاع', '#0F766E'], ['صافي الربح', '132 مليون', 'انخفض 6.4% عن 2024', '#B45309'], ['هامش الربح الصافي', '8.5%', 'كان 10.2% في 2024', '#B45309'], ['الديون / حقوق المساهمين', '0.9', 'مستوى متوسط', '#33454E']];
+    const gl = [['هامش الربح الصافي', 'كم يبقى للشركة من كل 100 ريال مبيعات بعد كل المصاريف. هنا 8.5 ريال.'], ['الديون إلى حقوق المساهمين', 'مقابل كل ريال يملكه المساهمون، على الشركة 0.9 ريال ديون.'], ['مبيعات الفروع المماثلة', 'مبيعات الفروع القديمة فقط، لتعرف هل النمو حقيقي أم بسبب فتح فروع جديدة. ارتفعت 4%.']];
+    const ol = [['إيجابي', 'المبيعات تنمو للسنة الثالثة على التوالي، ومبيعات الفروع القديمة نفسها ارتفعت.'], ['إيجابي', 'إذا وصلت الفروع الجديدة لنقطة التعادل خلال سنة كما ذكرت الإدارة، يُتوقع أن يتعافى الربح.'], ['انتبه', 'استمرار ارتفاع الفائدة يرفع تكلفة ديون الشركة ويضغط على الهامش.'], ['انتبه', 'قطاع التجزئة حساس لتباطؤ إنفاق المستهلكين.']];
+    return `
+    <section class="dark fade" style="padding:16px;gap:10px"><span class="acc" style="font-size:11px">بيانات تجريبية للعرض · ${esc(S.fileName)}</span><span style="font-size:19px;font-weight:700">شركة الأفق للتجزئة (اسم افتراضي)</span><span class="xs mut">قطاع التجزئة · السنة المالية 2025</span>
+      <div class="g2" style="gap:8px"><div class="tile"><div>النظرة القادمة</div><div style="color:#7FE0C4">إيجابية بحذر</div></div><div class="tile"><div>مناسبتها لك</div><div>${fit[1]}</div></div></div></section>
+    <div class="g2">${kpis.map((k) => `<div class="kpi"><span class="xs mut" style="font-size:11px">${k[0]}</span><b style="font-size:18px">${k[1]}</b><span style="font-size:11px;font-weight:600;color:${k[3]}">${k[2]}</span></div>`).join('')}</div>
+    <section class="card" style="gap:10px"><span class="h" style="font-size:15px">الإيرادات وصافي الربح (مليون ريال)</span>
+      ${yrs.map((y) => `<div style="display:flex;flex-direction:column;gap:4px"><b style="font-size:12px">${y[0]}</b><div style="display:flex;align-items:center;gap:6px"><div style="height:11px;width:${Math.round(y[1] / 1562 * 75)}%;background:#0F766E;border-radius:4px"></div><span class="xs">${y[1].toLocaleString('en-US')}</span></div><div style="display:flex;align-items:center;gap:6px"><div style="height:11px;width:${Math.round(y[2] * 5 / 1562 * 75)}%;background:#E08A2E;border-radius:4px"></div><span class="xs">${y[2]}</span></div></div>`).join('')}
+      <div style="display:flex;gap:12px;font-size:11px;flex-wrap:wrap" class="mut"><span><span style="display:inline-block;width:9px;height:9px;background:#0F766E;border-radius:2px"></span> الإيرادات</span><span><span style="display:inline-block;width:9px;height:9px;background:#E08A2E;border-radius:2px"></span> صافي الربح (مكبّر للمقارنة)</span></div></section>
+    <section class="card" style="gap:10px"><span class="h" style="font-size:15px">الخلاصة بلغة بسيطة</span>
+      <p class="sm" style="margin:0;color:#33454E">مبيعات الشركة تكبر سنة بعد سنة، لكن ربحها نزل قليلاً في 2025 لأنها فتحت فروعاً جديدة ودفعت تكاليفها قبل أن تبدأ تربح. هذا يختلف عن تراجع سببه ضعف الطلب.</p>
+      <b style="font-size:14px">مصطلحات وردت في الملف</b>${gl.map((x) => `<div class="sm"><b style="color:#0B4F4A">${x[0]}: </b>${x[1]}</div>`).join('')}</section>
+    <section class="card" style="gap:10px"><span class="h" style="font-size:15px">هل ستكون مربحة قريباً؟</span>
+      ${ol.map((o) => { const pos = o[0] === 'إيجابي'; return `<div class="sm" style="display:flex;gap:8px;align-items:flex-start"><span class="tag" style="background:${pos ? '#DDF2EC' : '#FCE7C8'};color:${pos ? '#0B5E55' : '#8A4B08'}">${o[0]}</span><span>${o[1]}</span></div>`; }).join('')}</section>
+    <section class="card" style="gap:10px"><span class="h" style="font-size:15px">هل تناسبك؟</span>
+      <div style="display:flex;align-items:center;gap:10px"><b style="font-size:26px;color:${fc};white-space:nowrap">${S.pFinished ? fit[0] + ' / 100' : '-'}</b><div class="bar" style="flex:1"><div style="width:${fit[0]}%;background:${fc}"></div></div></div>
+      <p class="sm" style="margin:0;color:#33454E">${fit[2]}</p>
+      ${S.pFinished ? '' : '<button class="btn2" data-act="tab" data-v="profile">أكمل ملفك الاستثماري</button>'}
+      <p class="xs mut" style="margin:0;font-size:11px">تحليل تعليمي لمساعدتك على الفهم، وليس توصية بالشراء أو البيع.</p></section>
+    <button class="btn2" style="border-color:#0F766E;color:#0F766E;font-weight:600" data-act="newFile">تحليل ملف آخر</button>`;
+  }
+  const kinds = ['قوائم مالية', 'تقرير سنوي', 'إفصاح'];
+  return `
+  <div><span class="h" style="font-size:18px;display:block">ارفع ملف الشركة أو القطاع</span><span class="sm mut">نشرحه لك بلغة بسيطة ونقارن النتيجة بملفك الاستثماري.</span></div>
+  <div style="display:flex;gap:6px">${kinds.map((t, i) => `<button class="chip ${S.finKind === i ? 'on' : ''}" style="flex:1;min-height:42px" data-act="kind" data-v="${i}">${t}</button>`).join('')}</div>
+  <label for="file" class="drop">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#0F766E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4"/><path d="M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg>
+    <b style="font-size:15px;color:#0B4F4A">اضغط لاختيار ملف</b><span class="xs mut">PDF أو Excel · حتى 20 ميجابايت</span>
+    ${S.fileName ? `<span style="margin-top:4px;font-size:13px;font-weight:600;background:#F1F6F4;border-radius:10px;padding:7px 12px">${esc(S.fileName)}</span>` : ''}
+  </label>
+  <input id="file" class="vh" type="file" accept=".pdf,.xls,.xlsx,.csv">
+  <button class="btn2" data-act="sample">استخدم ملفاً تجريبياً</button>
+  <button class="btn" data-act="analyze" ${S.fileName ? '' : 'disabled'}>حلّل الملف</button>`;
+}
+
+/* ---------- SHELL ---------- */
+const ICONS = {
+  profile: '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>',
+  lab: '<path d="M9 3h6"/><path d="M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3"/><path d="M7.5 15h9"/>',
+  analyst: '<path d="M3 12h4l3-8 4 16 3-8h4"/>',
+  finance: '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 17v-3"/><path d="M12 17v-5"/><path d="M15 17v-2"/>'
+};
+const TABS = [['profile', 'الملف'], ['lab', 'المختبر'], ['analyst', 'السلوكي'], ['finance', 'المالي']];
+
+function render() {
+  const app = document.getElementById('app');
+  const old = document.querySelector('main');
+  const keep = old && lastScreen === S.screen ? old.scrollTop : 0;
+  const info = profileInfo();
+  const view = { profile: viewProfile, lab: viewLab, analyst: viewAnalyst, finance: viewFinance }[S.screen]();
+  app.innerHTML = `
+  <header class="top"><div><small>وَعْي</small><h1>${TITLES[S.screen]}</h1></div>
+    <div class="pchip"><b>م</b>${S.pFinished ? info.risk + ' · ' + info.exp : 'ملف جديد'}</div></header>
+  <main>${view}</main>
+  <nav aria-label="التنقل">${TABS.map((t) => `<button class="${S.screen === t[0] ? 'on' : ''}" data-act="tab" data-v="${t[0]}" aria-label="${TITLES[t[0]]}"><span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[t[0]]}</svg></span>${t[1]}</button>`).join('')}</nav>`;
+  document.querySelector('main').scrollTop = keep;
+  lastScreen = S.screen;
+}
+
+function demo() {
+  const la = [analyze(0, 1, ['data'], 'قرأت أن سبب التراجع تكاليف توسع'), analyze(1, 2, ['afraid'], 'خفت أن تستمر الخسارة'), analyze(2, 2, ['crowd', 'quick'], 'الكل في تويتر يتكلم عنه'), analyze(3, 1, ['plan'], 'أريد تنويع المحفظة حسب هدفي')];
+  set({ pAns: { 0: 2, 1: 3, 2: 1, 3: 1, 4: 2, 5: 2 }, pFinished: true, pIdx: 5, labAns: la, labFinished: true, labIdx: 3, labStage: 'feedback', screen: 'analyst' });
+}
+
+const ACT = {
+  tab: (v) => set({ screen: v }),
+  demo,
+  pOpt: (v) => { S.pAns[S.pIdx] = +v; render(); },
+  pPrev: () => set({ pIdx: Math.max(0, S.pIdx - 1) }),
+  pNext: () => { if (S.pAns[S.pIdx] == null) return; if (S.pIdx === 5) set({ pFinished: true }); else set({ pIdx: S.pIdx + 1 }); },
+  resetProfile: () => set({ pAns: {}, pIdx: 0, pFinished: false }),
+  scOpt: (v) => set({ tmpChoice: +v }),
+  toReason: () => { if (S.tmpChoice != null) set({ labStage: 'reason' }); },
+  tag: (v) => set({ tmpTags: S.tmpTags.indexOf(v) >= 0 ? S.tmpTags.filter((x) => x !== v) : S.tmpTags.concat([v]) }),
+  back: () => set({ labStage: 'choose' }),
+  submit: () => { if (!S.tmpTags.length && !S.tmpText.trim()) return; S.labAns[S.labIdx] = analyze(S.labIdx, S.tmpChoice, S.tmpTags, S.tmpText); set({ labStage: 'feedback' }); },
+  nextSc: () => { if (S.labIdx === 3) set({ labFinished: true }); else { set({ labIdx: S.labIdx + 1, labStage: 'choose', tmpChoice: null, tmpTags: [], tmpText: '' }); document.querySelector('main').scrollTop = 0; } },
+  resetLab: () => set({ labIdx: 0, labStage: 'choose', labAns: [], tmpChoice: null, tmpTags: [], tmpText: '', labFinished: false }),
+  kind: (v) => set({ finKind: +v }),
+  sample: () => set({ fileName: 'القوائم_المالية_2025_تجريبي.pdf' }),
+  analyze: () => { if (!S.fileName) return; timers.forEach(clearTimeout); timers = []; set({ finStage: 'busy', busyStep: 0 }); [1, 2, 3, 4].forEach((n) => timers.push(setTimeout(() => set(n === 4 ? { finStage: 'done' } : { busyStep: n }), n * 650))); },
+  newFile: () => set({ finStage: 'idle', fileName: '', busyStep: 0 })
+};
+
+document.addEventListener('click', (e) => {
+  const b = e.target.closest('[data-act]'); if (!b || b.disabled) return;
+  const f = ACT[b.dataset.act]; if (f) f(b.dataset.v);
+});
+document.addEventListener('input', (e) => {
+  if (e.target.id !== 'reason') return;
+  S.tmpText = e.target.value;
+  const sb = document.getElementById('submitBtn'); if (sb) sb.disabled = !(S.tmpTags.length || S.tmpText.trim());
+});
+document.addEventListener('change', (e) => {
+  if (e.target.id !== 'file') return;
+  const f = e.target.files && e.target.files[0]; if (f) set({ fileName: f.name });
+});
+render();
+
+</script>
+</body>
+</html>
